@@ -26,7 +26,7 @@ const Register = () => {
         role: "admin", // default role
       });
 
-      navigate("/login");
+      navigate("/");
 
       alert('User registered successfully with role "user"');
     } catch (error) {
