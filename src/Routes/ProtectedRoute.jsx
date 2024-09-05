@@ -1,12 +1,13 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
+import Spinner from "../components/Spinner";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, userRole, loading } = useUserContext();
 
   // While loading, you might want to display a loading indicator
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Spinner />;
 
   // If not logged in, redirect to login
   if (!user) {

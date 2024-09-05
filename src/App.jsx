@@ -6,8 +6,10 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AdminPanel from "./pages/AdminPanel";
 import ProtectedRoute from "./Routes/ProtectedRoute";
-import PublicRoute from "./context/PublicRoute";
 import ForgotPassword from "./pages/ForgotPassword";
+import ChangePassword from "./pages/ChangePassword";
+import EditUser from "./pages/EditUser";
+import PublicRoute from "./Routes/PublicRoute";
 
 function App() {
   return (
@@ -38,6 +40,23 @@ function App() {
               </PublicRoute>
             }
           />
+          <Route
+            path="/change-password"
+            element={
+              <ProtectedRoute allowedRoles={["user", "admin"]}>
+                <ChangePassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit/:userId"
+            element={
+              <ProtectedRoute allowedRoles={["user", "admin"]}>
+                <EditUser />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/dashboard"
             element={
