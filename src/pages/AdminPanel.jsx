@@ -1,7 +1,7 @@
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { db } from "../firebaseConfig";
+import { auth, db } from "../firebaseConfig";
 
 function AdminPanel() {
   const [users, setUsers] = useState([]);
@@ -29,13 +29,21 @@ function AdminPanel() {
   }, []);
 
   const handleDelete = async (userId) => {
+    const currentUser = auth.currentUser;
+
+    if (currentUser && currentUser.uid === userId) {
+      alert("You can't delete your own data.");
+      return;
+    }
+
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this user?"
     );
+
     if (confirmDelete) {
       try {
         await deleteDoc(doc(db, "users", userId));
-        setUsers(users.filter((user) => user.id !== userId)); // Remove the deleted user from the state
+        setUsers(users.filter((user) => user.id !== userId));
         alert("User deleted successfully.");
       } catch (error) {
         console.error("Error deleting user:", error);
@@ -45,7 +53,7 @@ function AdminPanel() {
   };
 
   const handleEdit = (user) => {
-    navigate(`/edit/${user.id}`, { state: { user } }); // Pass user data to the edit page
+    navigate(`/edit/${user.id}`, { state: { user } });
   };
   return (
     <div className="m-10">

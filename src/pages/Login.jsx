@@ -22,7 +22,6 @@ const Login = () => {
       );
       const user = userCredential.user;
 
-      // Fetch user role from Firestore
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
 

@@ -9,8 +9,8 @@ import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState(""); // State htmlFor first name
-  const [lastName, setLastName] = useState(""); // State htmlFor last name
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
@@ -25,20 +25,19 @@ const Register = () => {
       const user = userCredential.user;
       const role = isAdmin ? "admin" : "user";
 
-      // Assign a default role to the new user in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
-        firstName: firstName, // Save first name
-        lastName: lastName, // Save last name
-        role: role, // Save the selected role
+        firstName: firstName,
+        lastName: lastName,
+        role: role,
       });
 
       navigate("/");
 
       alert('User registered successfully with role "user"');
     } catch (error) {
-      console.error("Error during registration:", error); // Log error to the console
-      alert(`Registration Error: ${error.message}`); // Show user-friendly error message
+      console.error("Error during registration:", error);
+      alert(`Registration Error: ${error.message}`);
     }
   };
 

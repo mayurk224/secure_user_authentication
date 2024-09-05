@@ -39,10 +39,9 @@ function EditUser() {
       await updateDoc(doc(db, "users", userId), {
         firstName,
         lastName,
-        // Optionally update other fields, e.g., role
       });
       alert("User updated successfully.");
-      navigate("/"); // Redirect after update
+      navigate("/");
     } catch (error) {
       console.error("Error updating user:", error);
       alert("Failed to update user.");
@@ -51,9 +50,9 @@ function EditUser() {
 
   const handleDelete = async () => {
     try {
-      await deleteDoc(doc(db, "users", userId)); // Ensure you import deleteDoc from 'firebase/firestore'
+      await deleteDoc(doc(db, "users", userId));
       alert("User deleted successfully.");
-      navigate("/"); // Redirect after deletion
+      navigate("/");
     } catch (error) {
       console.error("Error deleting user:", error);
       alert("Failed to delete user.");

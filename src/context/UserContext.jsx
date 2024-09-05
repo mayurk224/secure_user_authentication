@@ -3,7 +3,6 @@ import { auth, db } from "../firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 
-// Create the context
 const UserContext = createContext();
 
 export const useUserContext = () => useContext(UserContext);
@@ -17,19 +16,18 @@ export const UserProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
-        // Fetch user role from Firestore
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
           const userData = docSnap.data();
-          setUserRole(userData.role); // Set user role
+          setUserRole(userData.role);
         }
       } else {
         setUser(null);
         setUserRole(null);
       }
-      setLoading(false); // Set loading to false after user state is set
+      setLoading(false);
     });
 
     return () => unsubscribe();

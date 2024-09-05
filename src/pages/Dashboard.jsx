@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { auth, db } from "../firebaseConfig"; // Import Firebase auth
-import { signOut } from "firebase/auth"; // Import signOut from Firebase
+import { auth, db } from "../firebaseConfig";
+import { signOut } from "firebase/auth";
 import Spinner from "../components/Spinner";
 import { Link, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
@@ -9,11 +9,10 @@ import pic from "../assets/profile.jpg";
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userRole, setUserRole] = useState(""); // State to store user role
+  const [userRole, setUserRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const navigate = useNavigate();
 
-  // Handle auth state changes
   useEffect(() => {
     document.title = "Dashboard";
     const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
@@ -21,12 +20,11 @@ const Dashboard = () => {
         setUser(authUser);
 
         try {
-          // Fetch the user data from Firestore
           const userDoc = await getDoc(doc(db, "users", authUser.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            setFirstName(userData.firstName || ""); // Set the user's first name
-            setUserRole(userData.role || ""); // Set the user's role
+            setFirstName(userData.firstName || "");
+            setUserRole(userData.role || "");
           } else {
             console.error("No user document found");
           }
@@ -42,30 +40,26 @@ const Dashboard = () => {
       setLoading(false);
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
-  // Logout function
   const handleLogout = async () => {
     try {
       await signOut(auth);
       alert("You have been logged out successfully.");
-      navigate("/"); // Redirect to home page after logout
+      navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
       alert("Failed to log out. Please try again.");
     }
   };
 
-  // Navigate to edit page with user ID
   const handleEdit = () => {
     if (user) {
-      navigate(`/edit/${user.uid}`); // Pass only the user ID
+      navigate(`/edit/${user.uid}`);
     }
   };
 
-  // Display loading indicator while fetching user data
   if (loading) {
     return <Spinner />;
   }

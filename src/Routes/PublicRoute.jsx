@@ -1,20 +1,17 @@
 // PublicRoute.js
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useUserContext } from "../context/UserContext"; // Import the user context
+import { useUserContext } from "../context/UserContext";
 import Spinner from "../components/Spinner";
 
 const PublicRoute = ({ children }) => {
-  const { user, loading } = useUserContext(); // Get the user and loading state from context
+  const { user, loading } = useUserContext();
 
-  if (loading) return <Spinner />; // Display loading indicator while loading
-
-  // If user is authenticated, redirect to /dashboard
+  if (loading) return <Spinner />;
   if (user) {
     return <Navigate to="/dashboard" />;
   }
 
-  // If user is not authenticated, render the children (e.g., Login component)
   return children;
 };
 

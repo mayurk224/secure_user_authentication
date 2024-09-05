@@ -14,25 +14,21 @@ function ChangePassword() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Handle password change
   const handleChangePassword = async (e) => {
     e.preventDefault();
     setMessage("");
     setError("");
 
-    // Get the current user
     const user = auth.currentUser;
 
     if (user) {
-      // Reauthenticate the user
       const credential = EmailAuthProvider.credential(
         user.email,
         currentPassword
       );
       try {
-        await reauthenticateWithCredential(user, credential); // Reauthenticate the user with their current password
+        await reauthenticateWithCredential(user, credential);
 
-        // Update the user's password
         await updatePassword(user, newPassword);
         alert("Password updated successfully.");
         setCurrentPassword("");

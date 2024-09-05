@@ -10,7 +10,6 @@ function ForgotPassword() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Handle password reset
   const handlePasswordReset = async (e) => {
     e.preventDefault();
     setError("");
@@ -18,7 +17,7 @@ function ForgotPassword() {
     try {
       await sendPasswordResetEmail(auth, email);
       alert("Check your inbox");
-      setEmail(""); // Clear the input field after sending the email
+      setEmail("");
       navigate("/");
     } catch (error) {
       alert(error);
