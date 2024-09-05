@@ -13,6 +13,8 @@ function EditUser() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = "Edit Profile";
+
     const fetchUser = async () => {
       try {
         const userDoc = await getDoc(doc(db, "users", userId));

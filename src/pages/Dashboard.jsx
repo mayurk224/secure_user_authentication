@@ -15,6 +15,7 @@ const Dashboard = () => {
 
   // Handle auth state changes
   useEffect(() => {
+    document.title = "Dashboard";
     const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
       if (authUser) {
         setUser(authUser);

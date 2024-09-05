@@ -8,6 +8,8 @@ function AdminPanel() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = "Admin Panel";
+
     const fetchUsers = async () => {
       try {
         const usersCollection = collection(db, "users");
