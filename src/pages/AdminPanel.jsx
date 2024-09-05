@@ -2,10 +2,12 @@ import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../firebaseConfig";
+import Spinner from "../components/Spinner";
 
 function AdminPanel() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = "Admin Panel";
@@ -19,6 +21,7 @@ function AdminPanel() {
           ...doc.data(),
         }));
         setUsers(usersList);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching users:", error);
         alert(error);
@@ -55,10 +58,17 @@ function AdminPanel() {
   const handleEdit = (user) => {
     navigate(`/edit/${user.id}`, { state: { user } });
   };
+
+  if (loading) return <Spinner />;
   return (
     <div className="m-10">
-      <Link to="/dashboard">Dashboard</Link>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+      <Link
+        to="/dashboard"
+        className=" px-4 py-2 text-sm font-medium  text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
+      >
+        Dashboard
+      </Link>
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
         <div className="pb-4 ml-2 bg-white dark:bg-gray-900">
           <label htmlFor="table-search" className="sr-only">
             Search

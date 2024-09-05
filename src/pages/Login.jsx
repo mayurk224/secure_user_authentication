@@ -28,13 +28,15 @@ const Login = () => {
       if (docSnap.exists()) {
         const userData = docSnap.data();
         setUserRole(userData.role);
-        navigate("/dashboard");
         alert(`Logged in as ${userData.role}`);
+        navigate("/dashboard");
       } else {
         alert("No user data found");
+        navigate("/");
       }
     } catch (error) {
       alert(error.message);
+      navigate("/");
     }
   };
 
